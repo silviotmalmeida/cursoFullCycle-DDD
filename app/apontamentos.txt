@@ -1,0 +1,14 @@
+para instalar o typescript utiliza-se: npm i typescript --save-dev;
+
+para iniciar o projeto typescript utiliza-se: npx tsc --init
+
+para compilar o projeto typescript utiliza-se: npx tsc;
+
+para instalar o tslint utiliza-se: npm i tslint --save-dev;
+
+para iniciar o tslint utiliza-se: npx tslint --init;
+
+
+Detalhes do projeto:
+
+
