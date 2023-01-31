@@ -1,12 +1,12 @@
 // classe que respresenta o objeto de valor
 export default class Address {
   // definindo os atributos
-  private _street: string = "";
-  private _number: number = 0;
-  private _zip: string = "";
-  private _city: string = "";
+  private _street: string;
+  private _number: number;
+  private _zip: string;
+  private _city: string;
 
-  // definindo o construtor
+  // definindo o construtor com os atributos mínimos necessários
   constructor(street: string, number: number, zip: string, city: string) {
     this._street = street;
     this._number = number;

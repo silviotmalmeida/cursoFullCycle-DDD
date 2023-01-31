@@ -5,12 +5,12 @@ import Address from "../value-object/address";
 export default class Customer {
   // definindo os atributos
   private _id: string;
-  private _name: string = "";
+  private _name: string;
   private _address!: Address;
   private _active: boolean = false;
   private _rewardPoints: number = 0;
 
-  // definindo o construtor
+  // definindo o construtor com os atributos mínimos necessários
   constructor(id: string, name: string) {
     this._id = id;
     this._name = name;
@@ -82,6 +82,7 @@ export default class Customer {
     this._rewardPoints += points;
   }
 
+  // !!!!!
   set Address(address: Address) {
     this._address = address;
   }
