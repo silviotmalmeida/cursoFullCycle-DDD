@@ -8,7 +8,8 @@ para instalar o tslint utiliza-se: npm i tslint --save-dev;
 
 para iniciar o tslint utiliza-se: npx tslint --init;
 
+para instalar o jest utiliza-se: npm i -D jest @types/jest ts-node --save-dev;
 
-Detalhes do projeto:
+para instalar o swc utiliza-se: npm i -D @swc/jest @swc/cli @swc/core --save-dev;
 
-
+para iniciar o jest utiliza-se: npx jest --init;

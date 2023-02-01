@@ -6,7 +6,7 @@ export default class Customer {
   // definindo os atributos
   private _id: string;
   private _name: string;
-  private _address!: Address;
+  private _address!: Address; // vinculado ao objeto de valor Address
   private _active: boolean = false;
   private _rewardPoints: number = 0;
 
