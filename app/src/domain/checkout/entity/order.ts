@@ -1,5 +1,5 @@
 // dependências
-import OrderItem from "./order_item";
+import OrderItem from "./orderItem";
 
 // classe de domínio
 export default class Order {

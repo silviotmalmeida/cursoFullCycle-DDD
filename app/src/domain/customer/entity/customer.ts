@@ -32,7 +32,7 @@ export default class Customer {
     return this._rewardPoints;
   }
 
-  get Address(): Address {
+  get address(): Address {
     return this._address;
   }
 
@@ -79,11 +79,11 @@ export default class Customer {
 
   // método para incremento dos rewardPoints
   addRewardPoints(points: number) {
-    this._rewardPoints += points;
-  }
+    // for fornecido um número negatico de pontos, lança uma exceção
+    if (points <= 0) {
+      throw new Error("Points must be greater than 0");
+    }
 
-  // !!!!!
-  set Address(address: Address) {
-    this._address = address;
+    this._rewardPoints += points;
   }
 }
