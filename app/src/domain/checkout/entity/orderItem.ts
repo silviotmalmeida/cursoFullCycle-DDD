@@ -35,7 +35,7 @@ export default class OrderItem {
   }
 
   get price(): number {
-    return this._price * this._quantity;
+    return this._price;
   }
 
   get productId(): string {
@@ -59,9 +59,14 @@ export default class OrderItem {
     }
     if (this._productId.length === 0) {
       throw new Error("ProductId is required");
-    }    
+    }
     if (this._quantity <= 0) {
       throw new Error("Quantity must be greater than 0");
     }
+  }
+
+  // método para cálculo do preço total do orderItem
+  orderItemTotal(): number {
+    return this._price * this._quantity;
   }
 }
