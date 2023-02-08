@@ -1,34 +1,48 @@
+// dependências
 import { Sequelize } from "sequelize-typescript";
 import Product from "../../../../domain/product/entity/product";
-import ProductModel from "./product.model";
-import ProductRepository from "./product.repository";
+import ProductModel from "./productModel";
+import ProductRepository from "./productRepository";
 
+// criando a suíte de testes unitários
 describe("Product repository test", () => {
-  let sequileze: Sequelize;
+  // inicializando a variável do orm
+  let sequelize: Sequelize;
 
+  // ações que ocorrem antes de cada teste
   beforeEach(async () => {
-    sequileze = new Sequelize({
-      dialect: "sqlite",
-      storage: ":memory:",
-      logging: false,
-      sync: { force: true },
+    // configurando o orm
+    sequelize = new Sequelize({
+      dialect: "sqlite", // definindo o db
+      storage: ":memory:", // definindo que irá gravar em memória
+      logging: false, // sem login
+      sync: { force: true }, // criar as tabelas ao inicializar o db
     });
-    sequileze.addModels([ProductModel]);
-    await sequileze.sync();
+    // adicionando as models a serem consideradas
+    sequelize.addModels([ProductModel]);
+    // criando o db
+    await sequelize.sync();
   });
 
+  // ações que ocorrem após de cada teste
   afterEach(async () => {
-    await sequileze.close();
+    // encerrando o db
+    await sequelize.close();
   });
 
+  // se um registro for armazenado no db, seus atributos devem ser iguais aos do objeto de origem
   it("should create a product", async () => {
-    const productRepository = new ProductRepository();
+    // criando o objeto
     const product = new Product("1", "Product 1", 100);
 
+    // salvando no db
+    const productRepository = new ProductRepository();
     await productRepository.create(product);
 
+    // consultando no db
     const productModel = await ProductModel.findOne({ where: { id: "1" } });
 
+    // comparando-se os dados
     expect(productModel.toJSON()).toStrictEqual({
       id: "1",
       name: "Product 1",
@@ -36,27 +50,36 @@ describe("Product repository test", () => {
     });
   });
 
+  // se um registro for atualizado no db, seus atributos devem ser iguais aos do objeto de origem
   it("should update a product", async () => {
-    const productRepository = new ProductRepository();
+    // criando o objeto
     const product = new Product("1", "Product 1", 100);
 
+    // salvando no db
+    const productRepository = new ProductRepository();
     await productRepository.create(product);
 
+    // consultando no db
     const productModel = await ProductModel.findOne({ where: { id: "1" } });
 
+    // comparando-se os dados
     expect(productModel.toJSON()).toStrictEqual({
       id: "1",
       name: "Product 1",
       price: 100,
     });
 
+    // alterando os dados
     product.changeName("Product 2");
     product.changePrice(200);
 
+    // atualizando os dados no db
     await productRepository.update(product);
 
+    // consultando no db
     const productModel2 = await ProductModel.findOne({ where: { id: "1" } });
 
+    // comparando-se os dados atualizados
     expect(productModel2.toJSON()).toStrictEqual({
       id: "1",
       name: "Product 2",
@@ -64,16 +87,22 @@ describe("Product repository test", () => {
     });
   });
 
+  // se for executada uma busca por id, os atributos devem ser iguais aos do objeto de origem
   it("should find a product", async () => {
-    const productRepository = new ProductRepository();
+    // criando o objeto
     const product = new Product("1", "Product 1", 100);
 
+    // salvando no db
+    const productRepository = new ProductRepository();
     await productRepository.create(product);
 
+    // consultando no db pelo model
     const productModel = await ProductModel.findOne({ where: { id: "1" } });
 
+    // consultando no db pelo repository
     const foundProduct = await productRepository.find("1");
 
+    // comparando-se os dados
     expect(productModel.toJSON()).toStrictEqual({
       id: foundProduct.id,
       name: foundProduct.name,
@@ -81,18 +110,24 @@ describe("Product repository test", () => {
     });
   });
 
+  // se for executada uma busca de todos os registros, os atributos devem ser iguais aos dos objetos de origem
   it("should find all products", async () => {
-    const productRepository = new ProductRepository();
-    const product = new Product("1", "Product 1", 100);
-    await productRepository.create(product);
-
+    // criando os objetos
+    const product1 = new Product("1", "Product 1", 100);
     const product2 = new Product("2", "Product 2", 200);
+
+    // salvando no db
+    const productRepository = new ProductRepository();
+    await productRepository.create(product1);
     await productRepository.create(product2);
 
-    const foundProducts = await productRepository.findAll();
-    const products = [product, product2];
+    // produtos de origem
+    const products = [product1, product2];
 
-    expect(products).toEqual(foundProducts);    
+    // consultando no db
+    const foundProducts = await productRepository.findAll();
+
+    // comparando-se os dados
+    expect(products).toEqual(foundProducts);
   });
-  
 });

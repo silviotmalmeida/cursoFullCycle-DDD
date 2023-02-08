@@ -15,3 +15,7 @@ para instalar o swc utiliza-se: npm i -D @swc/jest @swc/cli @swc/core --save-dev
 para iniciar o jest utiliza-se: npx jest --init;
 
 para instalar o uuid utiliza-se: npm i uuid @types/uuid;
+
+para instalar o sequelize utiliza-se: npm i sequelize reflect-metadata sequelize-typescript;
+
+para instalar o sqlite utiliza-se: npm i sqlite3;

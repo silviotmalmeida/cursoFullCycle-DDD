@@ -2,7 +2,7 @@
 import ProductInterface from "./productInterface";
 
 // classe de domínio, implementando a interface
-export default class ProductA implements ProductInterface {
+export default class Product implements ProductInterface {
   // definindo os atributos
   private _id: string;
   private _name: string;

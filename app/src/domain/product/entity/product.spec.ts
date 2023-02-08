@@ -3,14 +3,14 @@ import Product from "./product";
 
 // criando a suíte de testes unitários
 describe("Product unit tests", () => {
-  // se um productA é criado sem id, é lançado um erro padrão
+  // se um product é criado sem id, é lançado um erro padrão
   it("should throw error when id is empty", () => {
     expect(() => {
       const product = new Product("", "Product 1", 100);
     }).toThrowError("Id is required");
   });
 
-  // se um productA é criado sem name, é lançado um erro padrão
+  // se um product é criado sem name, é lançado um erro padrão
   it("should throw error when name is empty", () => {
     expect(() => {
       const product = new Product("123", "", 100);
