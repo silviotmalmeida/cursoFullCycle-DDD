@@ -79,9 +79,9 @@ export default class Customer {
 
   // método para incremento dos rewardPoints
   addRewardPoints(points: number) {
-    // for fornecido um número negatico de pontos, lança uma exceção
-    if (points <= 0) {
-      throw new Error("Points must be greater than 0");
+    // for fornecido um número negativo de pontos, lança uma exceção
+    if (points < 0) {
+      throw new Error("Points must be a positive number");
     }
 
     this._rewardPoints += points;

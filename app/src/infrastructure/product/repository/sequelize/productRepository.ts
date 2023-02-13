@@ -7,6 +7,7 @@ import ProductModel from "./productModel";
 export default class ProductRepository implements ProductRepositoryInterface {
   // método de criação
   async create(entity: Product): Promise<void> {
+    // utiliza o método default do orm
     await ProductModel.create({
       id: entity.id,
       name: entity.name,
@@ -16,6 +17,7 @@ export default class ProductRepository implements ProductRepositoryInterface {
 
   // método de atualização
   async update(entity: Product): Promise<void> {
+    // utiliza o método default do orm
     await ProductModel.update(
       {
         name: entity.name,
@@ -31,14 +33,28 @@ export default class ProductRepository implements ProductRepositoryInterface {
 
   // método de busca por id
   async find(id: string): Promise<Product> {
-    const productModel = await ProductModel.findOne({ where: { id } });
+    // obtendo os dados do bd
+    let productModel;
+    // tratamento de exceções
+    try {
+      // utiliza o método default do orm
+      productModel = await ProductModel.findOne({ where: { id } });
+    } catch (error) {
+      // em caso de inexistência, lança uma exceção
+      throw new Error("Product not found");
+    }
+    // recriando a entidade do agregado, a partir dos dados do bd
     return new Product(productModel.id, productModel.name, productModel.price);
   }
 
   // método de busca
   async findAll(): Promise<Product[]> {
+    // utiliza o método default do orm
     const productModels = await ProductModel.findAll();
+
+    //iterando sobre os registros
     return productModels.map(
+      // recriando as entidades do agregado, a partir dos dados do bd
       (productModel) =>
         new Product(productModel.id, productModel.name, productModel.price)
     );

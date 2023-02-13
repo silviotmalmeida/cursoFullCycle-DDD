@@ -18,7 +18,7 @@ describe("Product repository test", () => {
       logging: false, // sem login
       sync: { force: true }, // criar as tabelas ao inicializar o db
     });
-    // adicionando as models a serem consideradas
+    // adicionando as models a serem consideradas na criação das tabelas
     sequelize.addModels([ProductModel]);
     // criando o db
     await sequelize.sync();
@@ -35,11 +35,11 @@ describe("Product repository test", () => {
     // criando o objeto
     const product = new Product("1", "Product 1", 100);
 
-    // salvando no db
+    // salvando no db utilizando os métodos do repository
     const productRepository = new ProductRepository();
     await productRepository.create(product);
 
-    // consultando no db
+    // consultando no db utilizando os métodos do orm
     const productModel = await ProductModel.findOne({ where: { id: "1" } });
 
     // comparando-se os dados
@@ -55,11 +55,11 @@ describe("Product repository test", () => {
     // criando o objeto
     const product = new Product("1", "Product 1", 100);
 
-    // salvando no db
+    // salvando no db utilizando os métodos do repository
     const productRepository = new ProductRepository();
     await productRepository.create(product);
 
-    // consultando no db
+    // consultando no db utilizando os métodos do orm
     const productModel = await ProductModel.findOne({ where: { id: "1" } });
 
     // comparando-se os dados
@@ -73,10 +73,10 @@ describe("Product repository test", () => {
     product.changeName("Product 2");
     product.changePrice(200);
 
-    // atualizando os dados no db
+    // atualizando os dados no db utilizando os métodos do repository
     await productRepository.update(product);
 
-    // consultando no db
+    // consultando no db utilizando os métodos do orm
     const productModel2 = await ProductModel.findOne({ where: { id: "1" } });
 
     // comparando-se os dados atualizados
@@ -92,14 +92,14 @@ describe("Product repository test", () => {
     // criando o objeto
     const product = new Product("1", "Product 1", 100);
 
-    // salvando no db
+    // salvando no db utilizando os métodos do repository
     const productRepository = new ProductRepository();
     await productRepository.create(product);
 
-    // consultando no db pelo model
+    // consultando no db utilizando os métodos do orm
     const productModel = await ProductModel.findOne({ where: { id: "1" } });
 
-    // consultando no db pelo repository
+    // consultando no db utilizando os métodos do repository
     const foundProduct = await productRepository.find("1");
 
     // comparando-se os dados
@@ -110,13 +110,22 @@ describe("Product repository test", () => {
     });
   });
 
+  // se for executada uma busca por id e a mesma não retornar registros, deve-se lançar uma exceção
+  it("should throw an error when product is not found", async () => {
+    // consultando no db utilizando os métodos do repository, por um registro inexistente
+    const productRepository = new ProductRepository();
+    expect(async () => {
+      await productRepository.find("456ABC");
+    }).rejects.toThrow("Product not found");
+  });
+
   // se for executada uma busca de todos os registros, os atributos devem ser iguais aos dos objetos de origem
   it("should find all products", async () => {
     // criando os objetos
     const product1 = new Product("1", "Product 1", 100);
     const product2 = new Product("2", "Product 2", 200);
 
-    // salvando no db
+    // salvando no db utilizando os métodos do repository
     const productRepository = new ProductRepository();
     await productRepository.create(product1);
     await productRepository.create(product2);
@@ -124,7 +133,7 @@ describe("Product repository test", () => {
     // produtos de origem
     const products = [product1, product2];
 
-    // consultando no db
+    // consultando no db utilizando os métodos do repository
     const foundProducts = await productRepository.findAll();
 
     // comparando-se os dados

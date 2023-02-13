@@ -92,7 +92,7 @@ describe("Customer unit tests", () => {
     expect(() => {
       const customer = new Customer("1", "Customer 1");
       customer.addRewardPoints(-10);
-    }).toThrowError("Points must be greater than 0");
+    }).toThrowError("Points must be a positive number");
   });
 
   // o método addRewardPoints() deve ser capaz somente de incrementar o rewardPoints
