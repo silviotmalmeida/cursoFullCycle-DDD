@@ -44,9 +44,9 @@ describe("Product repository test", () => {
 
     // comparando-se os dados
     expect(productModel.toJSON()).toStrictEqual({
-      id: "1",
-      name: "Product 1",
-      price: 100,
+      id: product.id,
+      name: product.name,
+      price: product.price,
     });
   });
 
@@ -60,13 +60,13 @@ describe("Product repository test", () => {
     await productRepository.create(product);
 
     // consultando no db utilizando os métodos do orm
-    const productModel = await ProductModel.findOne({ where: { id: "1" } });
+    let productModel = await ProductModel.findOne({ where: { id: "1" } });
 
     // comparando-se os dados
     expect(productModel.toJSON()).toStrictEqual({
-      id: "1",
-      name: "Product 1",
-      price: 100,
+      id: product.id,
+      name: product.name,
+      price: product.price,
     });
 
     // alterando os dados
@@ -77,13 +77,13 @@ describe("Product repository test", () => {
     await productRepository.update(product);
 
     // consultando no db utilizando os métodos do orm
-    const productModel2 = await ProductModel.findOne({ where: { id: "1" } });
+    productModel = await ProductModel.findOne({ where: { id: "1" } });
 
     // comparando-se os dados atualizados
-    expect(productModel2.toJSON()).toStrictEqual({
-      id: "1",
-      name: "Product 2",
-      price: 200,
+    expect(productModel.toJSON()).toStrictEqual({
+      id: product.id,
+      name: product.name,
+      price: product.price,
     });
   });
 
@@ -96,22 +96,15 @@ describe("Product repository test", () => {
     const productRepository = new ProductRepository();
     await productRepository.create(product);
 
-    // consultando no db utilizando os métodos do orm
-    const productModel = await ProductModel.findOne({ where: { id: "1" } });
-
     // consultando no db utilizando os métodos do repository
     const foundProduct = await productRepository.find("1");
 
     // comparando-se os dados
-    expect(productModel.toJSON()).toStrictEqual({
-      id: foundProduct.id,
-      name: foundProduct.name,
-      price: foundProduct.price,
-    });
+    expect(product).toStrictEqual(foundProduct);
   });
 
   // se for executada uma busca por id e a mesma não retornar registros, deve-se lançar uma exceção
-  it("should throw an error when product is not found", async () => {
+  it("should throw an error when product id is not found", async () => {
     // consultando no db utilizando os métodos do repository, por um registro inexistente
     const productRepository = new ProductRepository();
     expect(async () => {
@@ -119,7 +112,7 @@ describe("Product repository test", () => {
     }).rejects.toThrow("Product not found");
   });
 
-  // se for executada uma busca de todos os registros, os atributos devem ser iguais aos dos objetos de origem
+  // se for executada uma busca geral, os atributos devem ser iguais aos dos objetos de origem
   it("should find all products", async () => {
     // criando os objetos
     const product1 = new Product("1", "Product 1", 100);
@@ -130,13 +123,21 @@ describe("Product repository test", () => {
     await productRepository.create(product1);
     await productRepository.create(product2);
 
-    // produtos de origem
-    const products = [product1, product2];
-
     // consultando no db utilizando os métodos do repository
     const foundProducts = await productRepository.findAll();
 
-    // comparando-se os dados
-    expect(products).toEqual(foundProducts);
+    // realizando as verificações
+    expect(foundProducts).toHaveLength(2);
+    expect(foundProducts).toContainEqual(product1);
+    expect(foundProducts).toContainEqual(product2);
+  });
+
+  // se for executada uma busca geral e a mesma não retornar registros, deve-se lançar uma exceção
+  it("should throw an error when product is not found", async () => {
+    // consultando no db utilizando os métodos do repository, por um registro inexistente
+    const productRepository = new ProductRepository();
+    expect(async () => {
+      await productRepository.findAll();
+    }).rejects.toThrow("There are no registered products");
   });
 });
