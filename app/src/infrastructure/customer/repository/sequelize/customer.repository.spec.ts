@@ -160,13 +160,4 @@ describe("Customer repository test", () => {
     expect(customers).toContainEqual(customer1);
     expect(customers).toContainEqual(customer2);
   });
-
-  // se for executada uma busca geral e a mesma não retornar registros, deve-se lançar uma exceção
-  it("should throw an error when customer is not found", async () => {
-    // consultando no db utilizando os métodos do repository, por um registro inexistente
-    const customerRepository = new CustomerRepository();
-    expect(async () => {
-      await customerRepository.findAll();
-    }).rejects.toThrow("There are no registered customers");
-  });
 });

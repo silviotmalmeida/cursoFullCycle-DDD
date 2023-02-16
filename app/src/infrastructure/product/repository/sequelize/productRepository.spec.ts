@@ -131,13 +131,4 @@ describe("Product repository test", () => {
     expect(foundProducts).toContainEqual(product1);
     expect(foundProducts).toContainEqual(product2);
   });
-
-  // se for executada uma busca geral e a mesma não retornar registros, deve-se lançar uma exceção
-  it("should throw an error when product is not found", async () => {
-    // consultando no db utilizando os métodos do repository, por um registro inexistente
-    const productRepository = new ProductRepository();
-    expect(async () => {
-      await productRepository.findAll();
-    }).rejects.toThrow("There are no registered products");
-  });
 });

@@ -49,22 +49,8 @@ export default class ProductRepository implements ProductRepositoryInterface {
 
   // método de busca
   async findAll(): Promise<Product[]> {
-    // obtendo os dados do bd
-    let productModels;
-
-    // tratamento de exceções
-    try {
-      // utiliza o método default do orm
-      productModels = await ProductModel.findAll();
-
-      // se não existirem registros no bd, lança uma exceção
-      if (productModels.length == 0) {
-        throw new Error();
-      }
-    } catch (error) {
-      // em caso de inexistência, lança uma exceção
-      throw new Error("There are no registered products");
-    }
+    // utiliza o método default do orm
+    const productModels = await ProductModel.findAll();
 
     //iterando sobre os registros
     return productModels.map(

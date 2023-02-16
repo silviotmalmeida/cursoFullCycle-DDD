@@ -78,23 +78,8 @@ export default class CustomerRepository implements CustomerRepositoryInterface {
 
   // método de busca
   async findAll(): Promise<Customer[]> {
-    // obtendo os dados do bd
-    let customerModels;
-
-    // tratamento de exceções
-    try {
-      // utiliza o método default do orm
-      customerModels = await CustomerModel.findAll();
-
-      // se não existirem registros no bd, lança uma exceção
-      if (customerModels.length == 0) {
-        throw new Error();
-      }
-
-    } catch (error) {
-      // em caso de inexistência, lança uma exceção
-      throw new Error("There are no registered customers");
-    }
+    // utiliza o método default do orm
+    const customerModels = await CustomerModel.findAll();
 
     //iterando sobre os registros
     const customers = customerModels.map(
