@@ -1,7 +1,7 @@
 // dependências
 import Customer from "../../../../domain/customer/entity/customer";
+import CustomerRepositoryInterface from "../../../../domain/customer/repository/customeRepository.interface";
 import Address from "../../../../domain/customer/value-object/address";
-import CustomerRepositoryInterface from "../../../../domain/customer/repository/customer-repository.interface";
 import CustomerModel from "./customer.model";
 
 // classe de repositório do orm, implementando a interface de repositório definida no domain

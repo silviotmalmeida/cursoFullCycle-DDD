@@ -32,10 +32,10 @@ export default class OrderModel extends Model {
   @BelongsTo(() => CustomerModel)
   declare customer: CustomerModel;
 
-  // relacionamento com orderItem
-  @HasMany(() => OrderItemModel)
-  declare items: OrderItemModel[];
-
   @Column({ allowNull: false })
   declare total: number;
+
+  // relacionamento com orderItem, tem que ser realizado o include deste model no repository
+  @HasMany(() => OrderItemModel)
+  declare items: OrderItemModel[];
 }
