@@ -44,9 +44,17 @@ export default class Order {
     if (this._items.length === 0) {
       throw new Error("Items are required");
     }
-    if (this._items.some((item) => item.quantity <= 0)) {
-      throw new Error("Quantity must be greater than 0");
-    }
+  }
+
+  // método para alterar os itens da order
+  changeItems(items: OrderItem[]): void {
+    this._items = items;
+
+    // autovalidação de consistência
+    this.validate();
+
+    // recalculando o total
+    this._total = this.total();
   }
 
   // método para cálculo do preço total do pedido

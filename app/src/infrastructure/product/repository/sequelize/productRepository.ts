@@ -38,7 +38,7 @@ export default class ProductRepository implements ProductRepositoryInterface {
     // tratamento de exceções
     try {
       // utiliza o método default do orm
-      productModel = await ProductModel.findOne({ where: { id } });
+      productModel = await ProductModel.findOne({ where: { id: id }, });
     } catch (error) {
       // em caso de inexistência, lança uma exceção
       throw new Error("Product not found");

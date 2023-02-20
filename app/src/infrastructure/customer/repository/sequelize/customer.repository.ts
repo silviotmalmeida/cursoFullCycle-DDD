@@ -50,9 +50,7 @@ export default class CustomerRepository implements CustomerRepositoryInterface {
     try {
       // utiliza o método default do orm
       customerModel = await CustomerModel.findOne({
-        where: {
-          id,
-        },
+        where: { id: id },
         rejectOnEmpty: true,
       });
     } catch (error) {
