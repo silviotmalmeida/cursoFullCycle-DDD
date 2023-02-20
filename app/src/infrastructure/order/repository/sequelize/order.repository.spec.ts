@@ -169,9 +169,14 @@ describe("Order repository test", () => {
     order.changeItems([orderItem, orderItem2]);
 
     // atualizando os dados no db utilizando os métodos do repository
-    await sequelize.transaction(async (transaction) => {
-      await orderRepository.update(order);
-    });
+    try {
+      await sequelize.transaction(async (transaction) => {
+        await orderRepository.update(order);
+      });
+    } catch (err) {
+      // em caso de erro, envia uma mensage
+      throw new Error("Database error");
+    }
 
     // consultando no db utilizando os métodos do orm
     orderModel = await OrderModel.findOne({
