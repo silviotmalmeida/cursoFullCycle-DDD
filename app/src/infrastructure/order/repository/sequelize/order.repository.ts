@@ -31,19 +31,8 @@ export default class OrderRepository implements OrderRepositoryInterface {
 
   // método de atualização
   async update(entity: Order): Promise<void> {
-    // obtendo o registro anterior
-    const orderOld = await this.find(entity.id);
-
-    // iterando sobre os orderItem anteriores
-    orderOld.items.forEach(
-      // removendo os orderItem anteriores do bd
-      (orderItemModel) => {
-        OrderItemModel.destroy({ where: { id: orderItemModel.id } });
-      }
-    );
-
-    // removendo o order anterior
-    OrderModel.destroy({ where: { id: entity.id } });
+    // removendo o order e orderItems associados
+    await OrderModel.destroy({ where: { id: entity.id } });
 
     // recriando no bd o order e orderItems atualizados
     await this.create(entity);

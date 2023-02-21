@@ -36,6 +36,10 @@ export default class OrderModel extends Model {
   declare total: number;
 
   // relacionamento com orderItem, tem que ser realizado o include deste model no repository
-  @HasMany(() => OrderItemModel)
+  @HasMany(() => OrderItemModel, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+    hooks: true,
+  })
   declare items: OrderItemModel[];
 }
