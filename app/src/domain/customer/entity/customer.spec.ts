@@ -1,4 +1,8 @@
 // dependências
+import EventDispatcher from "../../shared/event/eventDispatcher";
+import SendConsoleLog1Handler from "../event/handler/sendConsoleLog1Handler";
+import SendConsoleLog2Handler from "../event/handler/sendConsoleLog2Handler";
+import SendConsoleLogHandler from "../event/handler/sendConsoleLogHandler";
 import Address from "../value-object/address";
 import Customer from "./customer";
 
@@ -122,5 +126,45 @@ describe("Customer unit tests", () => {
     expect(customer.address).toBe(address);
     expect(customer.isActive()).toBe(false);
     expect(customer.rewardPoints).toBe(20);
+  });
+
+  // se um customer for criado, os respectivos eventHandlers registrados devem ser notificados para ação
+  it("should notify event handlers, when customer is created", () => {
+    // criando o eventDispatcher
+    const eventDispatcher = new EventDispatcher();
+    // criando os eventHandlers
+    const eventHandler1 = new SendConsoleLog1Handler();
+    const eventHandler2 = new SendConsoleLog2Handler();
+    // registrando os eventHandlers
+    eventDispatcher.register("CustomerCreatedEvent", eventHandler1);
+    eventDispatcher.register("CustomerCreatedEvent", eventHandler2);
+    // criando os espiões para verificar se os métodos handle serão executados
+    const spyEventHandler1 = jest.spyOn(eventHandler1, "handle");
+    const spyEventHandler2 = jest.spyOn(eventHandler2, "handle");
+    // criando o customer
+    const customer = new Customer("1", "Customer 1", eventDispatcher);
+
+    // verificando se os métodos handle foram executados
+    expect(spyEventHandler1).toHaveBeenCalled();
+    expect(spyEventHandler2).toHaveBeenCalled();
+  });
+
+  // se um address for alterado, os respectivos eventHandlers registrados devem ser notificados para ação
+  it("should notify event handlers, when customer address is changed", () => {
+    // criando o eventDispatcher
+    const eventDispatcher = new EventDispatcher();
+    // criando o eventHandler
+    const eventHandler = new SendConsoleLogHandler();
+    // registrando o eventHandler
+    eventDispatcher.register("CustomerAddressChangedEvent", eventHandler);
+    // criando um espião para verificar se o método handle será executado
+    const spyEventHandler = jest.spyOn(eventHandler, "handle");
+    // criando o customer e alterando o endereço
+    const customer = new Customer("1", "Customer 1");
+    const address = new Address("Street 1", 123, "13330-250", "São Paulo");
+    customer.changeAddress(address, eventDispatcher);
+
+    // verificando se o método handle foi executado
+    expect(spyEventHandler).toHaveBeenCalled();
   });
 });

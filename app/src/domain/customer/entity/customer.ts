@@ -1,4 +1,7 @@
 // dependências
+import EventDispatcher from "../../shared/event/eventDispatcher";
+import CustomerAddressChangedEvent from "../event/customerAddressChangedEvent";
+import CustomerCreatedEvent from "../event/customerCreatedEvent";
 import Address from "../value-object/address";
 
 // classe de domínio
@@ -11,12 +14,17 @@ export default class Customer {
   private _rewardPoints: number = 0;
 
   // definindo o construtor com os atributos mínimos necessários
-  constructor(id: string, name: string) {
+  constructor(id: string, name: string, eventDispatcher?: EventDispatcher) {
     this._id = id;
     this._name = name;
 
     // autovalidação de consistência
     this.validate();
+
+    // se for injetado um eventDispatcher, dispara o evento de customerCreated
+    if (typeof eventDispatcher !== "undefined") {
+      this.launchCustomerCreatedEvent(eventDispatcher);
+    }
   }
 
   // getters (somente necessários)
@@ -54,8 +62,13 @@ export default class Customer {
   }
 
   // método para alteração do address
-  changeAddress(address: Address) {
+  changeAddress(address: Address, eventDispatcher?: EventDispatcher) {
     this._address = address;
+
+    // se for injetado um eventDispatcher, dispara o evento de customerAddressChanged
+    if (typeof eventDispatcher !== "undefined") {
+      this.launchCustomerAddressChangedEvent(eventDispatcher);
+    }
   }
 
   // método para consulta do active
@@ -85,5 +98,25 @@ export default class Customer {
     }
 
     this._rewardPoints += points;
+  }
+
+  // método responsável por notificar ao eventDispatcher o evento customerCreated
+  launchCustomerCreatedEvent(eventDispatcher: EventDispatcher) {
+    // criando o evento
+    const customerCreatedEvent = new CustomerCreatedEvent({});
+    // notificando os eventHandlers registrados associados oa evento
+    eventDispatcher.notify(customerCreatedEvent);
+  }
+
+  // método responsável por notificar ao eventDispatcher o evento customerAddressChanged
+  launchCustomerAddressChangedEvent(eventDispatcher: EventDispatcher) {
+    // criando o evento
+    const customerAddressChangedEvent = new CustomerAddressChangedEvent({
+      id: this.id,
+      name: this.name,
+      address: this.address,
+    });
+    // notificando os eventHandlers registrados associados oa evento
+    eventDispatcher.notify(customerAddressChangedEvent);
   }
 }
