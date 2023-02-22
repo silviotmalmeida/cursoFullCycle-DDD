@@ -1,6 +1,6 @@
 // dependências
 import Product from "../entity/product";
-import ProductService from "./product.service";
+import ProductService from "./productService";
 
 // criando a suíte de testes unitários
 describe("Product service unit tests", () => {

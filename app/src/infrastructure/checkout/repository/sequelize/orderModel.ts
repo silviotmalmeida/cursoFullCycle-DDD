@@ -8,8 +8,8 @@ import {
   BelongsTo,
   HasMany,
 } from "sequelize-typescript";
-import CustomerModel from "../../../customer/repository/sequelize/customer.model";
-import OrderItemModel from "./orderItem.model";
+import CustomerModel from "../../../customer/repository/sequelize/customerModel";
+import OrderItemModel from "./orderItemModel";
 
 // definindo as características da tabela no db
 @Table({

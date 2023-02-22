@@ -9,6 +9,7 @@ export default class Customer {
   // definindo os atributos
   private _id: string;
   private _name: string;
+  private _eventDispatcher: EventDispatcher;
   private _address!: Address; // vinculado ao objeto de valor Address
   private _active: boolean = false;
   private _rewardPoints: number = 0;
@@ -17,6 +18,9 @@ export default class Customer {
   constructor(id: string, name: string, eventDispatcher?: EventDispatcher) {
     this._id = id;
     this._name = name;
+    if (typeof eventDispatcher !== "undefined") {
+      this._eventDispatcher = eventDispatcher;
+    }
 
     // autovalidação de consistência
     this.validate();
@@ -44,6 +48,10 @@ export default class Customer {
     return this._address;
   }
 
+  get eventDispatcher(): EventDispatcher {
+    return this._eventDispatcher;
+  }
+
   // método de autovalidação de consistência
   validate() {
     // os atributos são obrigatórios
@@ -62,12 +70,12 @@ export default class Customer {
   }
 
   // método para alteração do address
-  changeAddress(address: Address, eventDispatcher?: EventDispatcher) {
+  changeAddress(address: Address) {
     this._address = address;
 
     // se for injetado um eventDispatcher, dispara o evento de customerAddressChanged
-    if (typeof eventDispatcher !== "undefined") {
-      this.launchCustomerAddressChangedEvent(eventDispatcher);
+    if (typeof this._eventDispatcher !== "undefined") {
+      this.launchCustomerAddressChangedEvent(this._eventDispatcher);
     }
   }
 

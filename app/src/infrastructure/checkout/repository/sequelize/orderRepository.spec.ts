@@ -5,11 +5,11 @@ import OrderItem from "../../../../domain/checkout/entity/orderItem";
 import Customer from "../../../../domain/customer/entity/customer";
 import Address from "../../../../domain/customer/value-object/address";
 import Product from "../../../../domain/product/entity/product";
-import CustomerModel from "../../../customer/repository/sequelize/customer.model";
-import CustomerRepository from "../../../customer/repository/sequelize/customer.repository";
-import OrderItemModel from "./orderItem.model";
-import OrderModel from "./order.model";
-import OrderRepository from "./order.repository";
+import CustomerModel from "../../../customer/repository/sequelize/customerModel";
+import CustomerRepository from "../../../customer/repository/sequelize/customerRepository";
+import OrderItemModel from "./orderItemModel";
+import OrderModel from "./orderModel";
+import OrderRepository from "./orderRepository";
 import ProductModel from "../../../product/repository/sequelize/productModel";
 import ProductRepository from "../../../product/repository/sequelize/productRepository";
 

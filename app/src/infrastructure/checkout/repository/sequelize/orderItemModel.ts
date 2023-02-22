@@ -7,7 +7,7 @@ import {
   ForeignKey,
   BelongsTo,
 } from "sequelize-typescript";
-import OrderModel from "./order.model";
+import OrderModel from "./orderModel";
 import ProductModel from "../../../product/repository/sequelize/productModel";
 
 // definindo as características da tabela no db

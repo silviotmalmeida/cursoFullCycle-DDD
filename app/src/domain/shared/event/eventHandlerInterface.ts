@@ -1,5 +1,5 @@
 // dependências
-import EventInterface from "./event.interface";
+import EventInterface from "./eventInterface";
 
 // interface com os métodos básicos a serem implementados em um eventHandler
 // podem existir vários eventHandlers para um event

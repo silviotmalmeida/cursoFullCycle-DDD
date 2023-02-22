@@ -160,9 +160,9 @@ describe("Customer unit tests", () => {
     // criando um espião para verificar se o método handle será executado
     const spyEventHandler = jest.spyOn(eventHandler, "handle");
     // criando o customer e alterando o endereço
-    const customer = new Customer("1", "Customer 1");
+    const customer = new Customer("1", "Customer 1", eventDispatcher);
     const address = new Address("Street 1", 123, "13330-250", "São Paulo");
-    customer.changeAddress(address, eventDispatcher);
+    customer.changeAddress(address);
 
     // verificando se o método handle foi executado
     expect(spyEventHandler).toHaveBeenCalled();

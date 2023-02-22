@@ -1,8 +1,8 @@
 // dependências
 import Order from "../../../../domain/checkout/entity/order";
-import OrderItemModel from "./orderItem.model";
-import OrderModel from "./order.model";
-import OrderRepositoryInterface from "../../../../domain/checkout/entity/repository/orderRepository.interface";
+import OrderItemModel from "./orderItemModel";
+import OrderModel from "./orderModel";
+import OrderRepositoryInterface from "../../../../domain/checkout/repository/orderRepositoryInterface";
 import OrderItem from "../../../../domain/checkout/entity/orderItem";
 
 // classe de repositório do orm, implementando a interface de repositório definida no domain

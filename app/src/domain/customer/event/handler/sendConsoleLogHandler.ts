@@ -1,5 +1,5 @@
 // dependências
-import EventHandlerInterface from "../../../shared/event/eventHandler.interface";
+import EventHandlerInterface from "../../../shared/event/eventHandlerInterface";
 import CustomerAddressChangedEvent from "../customerAddressChangedEvent";
 
 // classe handler para o event CustomerAddressChanged, implementa a eventHandler

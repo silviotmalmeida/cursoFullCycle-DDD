@@ -1,8 +1,8 @@
 // dependências
 import Customer from "../../../../domain/customer/entity/customer";
-import CustomerRepositoryInterface from "../../../../domain/customer/repository/customeRepository.interface";
+import CustomerRepositoryInterface from "../../../../domain/customer/repository/customeRepositoryInterface";
 import Address from "../../../../domain/customer/value-object/address";
-import CustomerModel from "./customer.model";
+import CustomerModel from "./customerModel";
 
 // classe de repositório do orm, implementando a interface de repositório definida no domain
 export default class CustomerRepository implements CustomerRepositoryInterface {

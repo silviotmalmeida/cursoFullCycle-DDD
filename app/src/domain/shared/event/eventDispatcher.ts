@@ -1,7 +1,7 @@
 // dependências
-import EventDispatcherInterface from "./eventDispatcher.interface";
-import EventHandlerInterface from "./eventHandler.interface";
-import eventInterface from "./event.interface";
+import EventDispatcherInterface from "./eventDispatcherInterface";
+import EventHandlerInterface from "./eventHandlerInterface";
+import eventInterface from "./eventInterface";
 
 // criando a classe que implementa o eventDispatcherInterface
 // um eventDispatcher monitora os events e despacha as ações contidas nos eventHandlers registrados

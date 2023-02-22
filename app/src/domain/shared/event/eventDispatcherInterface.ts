@@ -1,6 +1,6 @@
 //dependências
-import EventHandlerInterface from "./eventHandler.interface";
-import EventInterface from "./event.interface";
+import EventHandlerInterface from "./eventHandlerInterface";
+import EventInterface from "./eventInterface";
 
 // interface com os métodos básicos a serem implementados em um eventDispatcher
 // um eventDispatcher monitora os events e despacha as ações contidas nos eventHandlers

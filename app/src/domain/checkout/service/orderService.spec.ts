@@ -2,7 +2,7 @@
 import Customer from "../../customer/entity/customer";
 import Order from "../entity/order";
 import OrderItem from "../entity/orderItem";
-import OrderService from "./order.service";
+import OrderService from "./orderService";
 
 // criando a suíte de testes unitários
 describe("Order service unit tests", () => {
